@@ -1,0 +1,18 @@
+#!/usr/bin/node
+
+let fs = require("fs");
+let Phrase = require("tcbrook-palindrome");
+
+let text = fs.readFileSync("phrases.txt", "utf8");
+let file = text.split("\n").map (line => {
+  let phrase = new Phrase(line);
+  if (phrase.palindrome()) {
+    return line
+  }
+});
+console.log(file.join("\n"));
+fs.writeFile("palindromes.txt", file.join("\n"), function(err) {
+  if(err) {
+      return console.log(err);
+  }
+});
